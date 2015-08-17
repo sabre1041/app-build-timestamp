@@ -14,6 +14,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.build.timestamp.format>MM/dd/yyyy HH:mm:ss z</maven.build.timestamp.format>
 		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.war.plugin.version>2.6</maven.war.plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -50,11 +51,34 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>${maven.war.plugin.version}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 		</plugins>
+		
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>${maven.war.plugin.version}</version>
+						<configuration>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<warName>ROOT</warName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			
+		</profile>
+	</profiles>
 
 </project>
